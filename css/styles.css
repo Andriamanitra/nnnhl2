@@ -1,0 +1,59 @@
+body {
+    font-family: Consolas, monospace;
+}
+a {
+    text-decoration: none;
+}
+.score {
+    display: inline-block;
+    text-align: center;
+    width: 5ch;
+}
+.playing .score {
+    color: #cc0606;
+}
+.FUT .score {
+    color: rgb(160, 160, 160);
+}
+.score.spoiler {
+    background: grey;
+    color: grey;
+    user-select: none;
+}
+.spoiler:active {
+    color: black;
+}
+
+.ANA { --team-color: #B9975B; }
+.ARI { --team-color: #8C2633; }
+.BOS { --team-color: #FFB81C; }
+.BUF { --team-color: #002654; }
+.CGY { --team-color: #C8102E; }
+.CAR { --team-color: #CC0000; }
+.CHI { --team-color: #CF0A2C; }
+.COL { --team-color: #6F263D; }
+.CBJ { --team-color: #002654; }
+.DAL { --team-color: #00843D; }
+.DET { --team-color: #CE1126; }
+.EDM { --team-color: #FF4C00; }
+.FLA { --team-color: #C8102E; }
+.LAK { --team-color: #111111; }
+.MIN { --team-color: #154734; }
+.MTL { --team-color: #AF1E2D; }
+.NSH { --team-color: #FFB81C; }
+.NJD { --team-color: #CE1126; }
+.NYI { --team-color: #00539B; }
+.NYR { --team-color: #0033A0; }
+.OTT { --team-color: #E31837; }
+.PHI { --team-color: #F74902; }
+.PIT { --team-color: #FCB514; }
+.SEA { --team-color: #99D9D9; }
+.SJS { --team-color: #006D75; }
+.STL { --team-color: #002F87; }
+.TBL { --team-color: #002868; }
+.TOR { --team-color: #00205B; }
+.UTA { --team-color: #71AFE5; }
+.VAN { --team-color: #001F5E; }
+.VGK { --team-color: #B4975A; }
+.WSH { --team-color: #E51837; }
+.WPG { --team-color: #041E42; }
