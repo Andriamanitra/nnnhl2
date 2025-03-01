@@ -38,7 +38,7 @@ fn games2html(games: Vec<api_types::Game>) -> Markup {
         };
 
         html! {
-            li.game.playing[game.game_state != "OFF" && game.game_state != "FUT"].(game.game_state) {
+            li.game.(game.game_state) {
                 (clock) " " (game_center_link) (home) " - " (away) " " (recap_link) " " (score)
             }
         }

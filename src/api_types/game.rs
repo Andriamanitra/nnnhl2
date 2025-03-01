@@ -20,7 +20,8 @@ pub struct Game {
     #[serde(rename = "gameState")]
     /// Known values for game_state are
     /// * `"OFF"` - game has ended
-    /// * ??????? - game is ongoing
+    /// * `"PRE"` - pre-game
+    /// * `"LIVE"` - game is ongoing
     /// * `"FUT"` - game has not started yet
     pub game_state: String,
     #[serde(rename = "gameScheduleState")]
