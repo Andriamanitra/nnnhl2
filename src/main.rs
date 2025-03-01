@@ -1,6 +1,8 @@
-use maud::{DOCTYPE, Markup, PreEscaped, html};
-
+mod api_client;
 mod api_types;
+
+use api_client::CachedFetch;
+use maud::{DOCTYPE, Markup, PreEscaped, html};
 
 fn games2html(games: Vec<api_types::Game>) -> Markup {
     fn game2html(game: api_types::Game) -> Markup {
@@ -59,27 +61,22 @@ macro_rules! js_from_file {
     };
 }
 
-fn get_schedule() -> Result<api_types::Schedule, ureq::Error> {
-    let today = chrono::Utc::now();
-    let start_date = today
-        .checked_sub_days(chrono::Days::new(2))
-        .unwrap()
-        .format("%Y-%m-%d");
-    let nhl_api_url = format!("https://api-web.nhle.com/v1/schedule/{}", start_date);
-    println!("Fetching {nhl_api_url} ...");
-    ureq::get(nhl_api_url)
-        .call()
-        .and_then(|mut res| res.body_mut().read_json())
-}
-
 fn main() {
     let host = std::env::var("HOST").unwrap_or("127.0.0.1:8002".to_string());
+
+    let cache_time_to_live = chrono::Duration::minutes(5);
+    let schedule_fetcher = std::sync::Arc::new(CachedFetch::new(
+        cache_time_to_live,
+        api_client::fetch_schedule,
+    ));
+
     println!("Listening on http://{host}/");
     rouille::start_server(host, move |req| {
+        println!("{} {}", req.method(), req.url());
         if req.url().contains("favico") {
             return rouille::Response::empty_404();
         };
-        let schedule = match get_schedule() {
+        let schedule = match schedule_fetcher.get() {
             Ok(schedule) => schedule,
             Err(e) => {
                 eprintln!("{:?}", e);
