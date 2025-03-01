@@ -3,25 +3,14 @@ body {
 }
 a {
     text-decoration: none;
+    color: #1a68b6;
 }
-.score {
-    display: inline-block;
-    text-align: center;
-    width: 5ch;
+a:hover {
+    text-decoration: underline;
 }
-.playing .score {
-    color: #cc0606;
-}
-.FUT .score {
-    color: rgb(160, 160, 160);
-}
-.score.spoiler {
-    background: grey;
-    color: grey;
-    user-select: none;
-}
-.spoiler:active {
-    color: black;
+nav ul li a {
+    outline: 1px solid grey;
+    border-radius: 5px;
 }
 
 .ANA { --team-color: #B9975B; }

@@ -1,5 +1,10 @@
 use crate::api_types::*;
 
+type GoalCount = i32;
+
+/// Number in range 1..=32 that can be used to order the teams
+type Rank = u8;
+
 /// Response type for the following end points:
 /// * `/v1/standings/now`
 /// * `/v1/standings/YYYY-MM-DD`
@@ -17,50 +22,50 @@ pub struct TeamStanding {
     #[serde(rename = "conferenceAbbrev")]
     pub conference_abbrev: String,
     #[serde(rename = "conferenceHomeSequence")]
-    pub conference_home_sequence: usize,
+    pub conference_home_sequence: Rank,
     #[serde(rename = "conferenceL10Sequence")]
-    pub conference_l10sequence: usize,
+    pub conference_l10sequence: Rank,
     #[serde(rename = "conferenceName")]
     pub conference_name: String,
     #[serde(rename = "conferenceRoadSequence")]
-    pub conference_road_sequence: usize,
+    pub conference_road_sequence: Rank,
     #[serde(rename = "conferenceSequence")]
-    pub conference_sequence: usize,
+    pub conference_sequence: Rank,
     pub date: String,
     #[serde(rename = "divisionAbbrev")]
     pub division_abbrev: String,
     #[serde(rename = "divisionHomeSequence")]
-    pub division_home_sequence: usize,
+    pub division_home_sequence: Rank,
     #[serde(rename = "divisionL10Sequence")]
-    pub division_l10sequence: usize,
+    pub division_l10sequence: Rank,
     #[serde(rename = "divisionName")]
     pub division_name: String,
     #[serde(rename = "divisionRoadSequence")]
-    pub division_road_sequence: usize,
+    pub division_road_sequence: Rank,
     #[serde(rename = "divisionSequence")]
-    pub division_sequence: usize,
+    pub division_sequence: Rank,
     #[serde(rename = "gameTypeId")]
     pub game_type_id: GameTypeId,
     #[serde(rename = "gamesPlayed")]
     pub games_played: usize,
     #[serde(rename = "goalDifferential")]
-    pub goal_differential: usize,
+    pub goal_differential: GoalCount,
     #[serde(rename = "goalDifferentialPctg")]
     pub goal_differential_pctg: f64,
     #[serde(rename = "goalAgainst")]
-    pub goal_against: usize,
+    pub goal_against: GoalCount,
     #[serde(rename = "goalFor")]
-    pub goal_for: usize,
+    pub goal_for: GoalCount,
     #[serde(rename = "goalsForPctg")]
     pub goals_for_pctg: f64,
     #[serde(rename = "homeGamesPlayed")]
     pub home_games_played: usize,
     #[serde(rename = "homeGoalDifferential")]
-    pub home_goal_differential: usize,
+    pub home_goal_differential: GoalCount,
     #[serde(rename = "homeGoalsAgainst")]
-    pub home_goals_against: usize,
+    pub home_goals_against: GoalCount,
     #[serde(rename = "homeGoalsFor")]
-    pub home_goals_for: usize,
+    pub home_goals_for: GoalCount,
     #[serde(rename = "homeLosses")]
     pub home_losses: usize,
     #[serde(rename = "homeOtLosses")]
@@ -78,11 +83,11 @@ pub struct TeamStanding {
     #[serde(rename = "l10GamesPlayed")]
     pub l10games_played: usize,
     #[serde(rename = "l10GoalDifferential")]
-    pub l10goal_differential: usize,
+    pub l10goal_differential: GoalCount,
     #[serde(rename = "l10GoalsAgainst")]
-    pub l10goals_against: usize,
+    pub l10goals_against: GoalCount,
     #[serde(rename = "l10GoalsFor")]
-    pub l10goals_for: usize,
+    pub l10goals_for: GoalCount,
     #[serde(rename = "l10Losses")]
     pub l10losses: usize,
     #[serde(rename = "l10OtLosses")]
@@ -98,13 +103,13 @@ pub struct TeamStanding {
     #[serde(rename = "l10Wins")]
     pub l10wins: usize,
     #[serde(rename = "leagueHomeSequence")]
-    pub league_home_sequence: usize,
+    pub league_home_sequence: Rank,
     #[serde(rename = "leagueL10Sequence")]
-    pub league_l10sequence: usize,
+    pub league_l10sequence: Rank,
     #[serde(rename = "leagueRoadSequence")]
-    pub league_road_sequence: usize,
+    pub league_road_sequence: Rank,
     #[serde(rename = "leagueSequence")]
-    pub league_sequence: usize,
+    pub league_sequence: Rank,
     pub losses: usize,
     #[serde(rename = "otLosses")]
     pub ot_losses: usize,
@@ -124,11 +129,11 @@ pub struct TeamStanding {
     #[serde(rename = "roadGamesPlayed")]
     pub road_games_played: usize,
     #[serde(rename = "roadGoalDifferential")]
-    pub road_goal_differential: usize,
+    pub road_goal_differential: GoalCount,
     #[serde(rename = "roadGoalsAgainst")]
-    pub road_goals_against: usize,
+    pub road_goals_against: GoalCount,
     #[serde(rename = "roadGoalsFor")]
-    pub road_goals_for: usize,
+    pub road_goals_for: GoalCount,
     #[serde(rename = "roadLosses")]
     pub road_losses: usize,
     #[serde(rename = "roadOtLosses")]
@@ -163,9 +168,9 @@ pub struct TeamStanding {
     pub team_logo: String,
     pub ties: usize,
     #[serde(rename = "waiversSequence")]
-    pub waivers_sequence: usize,
+    pub waivers_sequence: Rank,
     #[serde(rename = "wildcardSequence")]
-    pub wildcard_sequence: usize,
+    pub wildcard_sequence: Rank,
     #[serde(rename = "winPctg")]
     pub win_pctg: f64,
     pub wins: usize,

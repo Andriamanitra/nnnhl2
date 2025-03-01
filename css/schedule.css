@@ -1,0 +1,19 @@
+.score {
+    display: inline-block;
+    text-align: center;
+    width: 5ch;
+}
+.playing .score {
+    color: #cc0606;
+}
+.FUT .score {
+    color: rgb(160, 160, 160);
+}
+.score.spoiler {
+    background: grey;
+    color: grey;
+    user-select: none;
+}
+.spoiler:active {
+    color: black;
+}

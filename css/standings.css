@@ -1,0 +1,7 @@
+.team-standing span {
+    display: inline-block;
+    line-height: 1.2;
+    min-width: 3ch;
+    margin: 0 0.5ch;
+    text-align: right;
+}

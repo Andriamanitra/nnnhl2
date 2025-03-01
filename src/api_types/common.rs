@@ -33,3 +33,9 @@ pub struct LocalizableString {
     de: Option<String>,
     es: Option<String>,
 }
+
+impl std::fmt::Display for LocalizableString {
+    fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
+        f.write_str(&self.default)
+    }
+}
