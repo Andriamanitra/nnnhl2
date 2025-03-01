@@ -61,6 +61,36 @@ macro_rules! js_from_file {
     };
 }
 
+fn schedule_page(schedule: api_types::Schedule) -> Markup {
+    html! {
+        (DOCTYPE)
+        html {
+            head {
+                meta charset="UTF-8";
+                meta name="viewport" content="width=device-width, initial-scale=1.0";
+                style {
+                    (include_str!("../css/reset.css"))
+                    (include_str!("../css/layout.css"))
+                    (include_str!("../css/styles.css"))
+                }
+                title { "No-Nonsense NHL schedule" }
+            }
+            body {
+                h1 { "NHL Schedule" }
+
+                @for day in schedule.game_week {
+                    h2 {
+                        (day.date.format("%a %d.%m."))
+                    }
+                    (games2html(day.games))
+                }
+                (js_from_file!("../js/time2local.js"))
+                (js_from_file!("../js/spoilers.js"))
+            }
+        }
+    }
+}
+
 fn main() {
     let host = std::env::var("HOST").unwrap_or("127.0.0.1:8002".to_string());
 
@@ -73,44 +103,16 @@ fn main() {
     println!("Listening on http://{host}/");
     rouille::start_server(host, move |req| {
         println!("{} {}", req.method(), req.url());
-        if req.url().contains("favico") {
-            return rouille::Response::empty_404();
-        };
-        let schedule = match schedule_fetcher.get() {
-            Ok(schedule) => schedule,
-            Err(e) => {
-                eprintln!("{:?}", e);
-                return rouille::Response::text("failed to get schedule from nhl api")
-                    .with_status_code(500);
-            }
-        };
-        let markup = html! {
-            (DOCTYPE)
-            html {
-                head {
-                    meta charset="UTF-8";
-                    meta name="viewport" content="width=device-width, initial-scale=1.0";
-                    style {
-                        (include_str!("../css/reset.css"))
-                        (include_str!("../css/layout.css"))
-                        (include_str!("../css/styles.css"))
-                    }
-                    title { "No-Nonsense NHL schedule" }
+        match req.url().as_str() {
+            "/" | "/schedule" => match schedule_fetcher.get() {
+                Ok(schedule) => rouille::Response::html(schedule_page(schedule)),
+                Err(e) => {
+                    eprintln!("{e}");
+                    rouille::Response::text("failed to get schedule from nhl api")
+                        .with_status_code(500)
                 }
-                body {
-                    h1 { "NHL Schedule" }
-
-                    @for day in schedule.game_week {
-                        h2 {
-                            (day.date.format("%a %d.%m."))
-                        }
-                        (games2html(day.games))
-                    }
-                    (js_from_file!("../js/time2local.js"))
-                    (js_from_file!("../js/spoilers.js"))
-                }
-            }
-        };
-        rouille::Response::html(markup.into_string())
+            },
+            _ => rouille::Response::text("404 Not found").with_status_code(404),
+        }
     });
 }
