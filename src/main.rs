@@ -29,7 +29,7 @@ fn games2html(games: Vec<api_types::Game>) -> Markup {
             None => html! { "|" },
         };
         let score = html! {
-            span.score.spoiler[game.game_state == "OFF"] {
+            span.score.spoiler[game.game_state == "OFF" || game.game_state == "FINAL"] {
                 (match (game.home_team.score, game.away_team.score) {
                     (Some(h), Some(a)) => format!("{h}–{a}"),
                     _ => "TBD".to_string()

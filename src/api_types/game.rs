@@ -19,10 +19,11 @@ pub struct Game {
     pub venue_timezone: String,
     #[serde(rename = "gameState")]
     /// Known values for game_state are
-    /// * `"OFF"` - game has ended
+    /// * `"FUT"` - game has not started yet
     /// * `"PRE"` - pre-game
     /// * `"LIVE"` - game is ongoing
-    /// * `"FUT"` - game has not started yet
+    /// * `"FINAL"` - game has ended
+    /// * `"OFF"` - broadcast has ended
     pub game_state: String,
     #[serde(rename = "gameScheduleState")]
     pub game_schedule_state: String,
