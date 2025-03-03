@@ -24,22 +24,31 @@ fn games2html(games: Vec<api_types::Game>) -> Markup {
         };
         let recap_link = match game.condensed_game {
             Some(path) => html! {
-                a title="Recap" href=(format!("https://nhl.com{path}")) { "R" }
+                a.recap title="Recap" href=(format!("https://nhl.com{path}")) { "R" }
             },
-            None => html! { "|" },
+            None => html! { span.recap { "|" } },
+        };
+        let special_outcome = match game.game_outcome {
+            Some(api_types::GameOutcome { ref last_period_type }) if last_period_type != "REG" => Some(last_period_type),
+            _ => None,
         };
         let score = html! {
             span.score.spoiler[game.game_state == "OFF" || game.game_state == "FINAL"] {
-                (match (game.home_team.score, game.away_team.score) {
-                    (Some(h), Some(a)) => format!("{h}–{a}"),
-                    _ => "TBD".to_string()
+                (match (game.away_team.score, game.home_team.score) {
+                    (Some(away_goals), Some(home_goals)) => html! {
+                        span { (away_goals) "–" (home_goals) }
+                        @if let Some(last_period_type) = special_outcome {
+                            span.overtime { (last_period_type) }
+                        }
+                    },
+                    _ => html! { "TBD" }
                 })
             }
         };
 
         html! {
             li.game.(game.game_state) {
-                (clock) " " (game_center_link) (home) " - " (away) " " (recap_link) " " (score)
+                (clock) (away) (game_center_link) (home) (recap_link) (score)
             }
         }
     }

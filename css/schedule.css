@@ -1,19 +1,50 @@
-.score {
-    display: inline-block;
-    text-align: center;
-    width: 5ch;
+.game {
+    display: flex;
+    padding: 0 1ch;
+    margin-bottom: 1px;
+    time {
+        padding-right: 1.5ch;
+    }
+    a {
+        padding: 0 0.5ch;
+    }
+    .recap {
+        padding-left: 1.5ch;
+        padding-right: 1ch;
+    }
+    .score {
+        display: flex;
+        width: 5ch;
+        padding-left: 1ch;
+        text-wrap: nowrap;
+        align-items: center;
+        gap: 0.3ch;
+        .overtime {
+            font-size: 0.7em;
+            font-weight: 600;
+        }
+    }
+}
+.spoiler {
+    visibility: hidden;
+}
+.spoiler:active {
+    visibility: visible;
+}
+.spoiler:not(:active)::before {
+    visibility: visible;
+    position: absolute;
+    margin-left: -1ch;
+    white-space: pre;
+    content: ' ?-?  ';
+    cursor: pointer;
+    background: #777;
+    color: #444;
+    border-radius: 3px;
 }
 .LIVE .score {
     color: #cc0606;
 }
 .FUT .score {
     color: rgb(160, 160, 160);
-}
-.score.spoiler {
-    background: grey;
-    color: grey;
-    user-select: none;
-}
-.spoiler:active {
-    color: black;
 }
