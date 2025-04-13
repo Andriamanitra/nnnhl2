@@ -6,9 +6,9 @@ use crate::api_types::*;
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct Schedule {
     #[serde(rename = "nextStartDate")]
-    pub next_start_date: NaiveDate,
+    pub next_start_date: Option<NaiveDate>,
     #[serde(rename = "previousStartDate")]
-    pub previous_start_date: NaiveDate,
+    pub previous_start_date: Option<NaiveDate>,
     #[serde(rename = "gameWeek")]
     pub game_week: Vec<GameWeek>,
     #[serde(rename = "preSeasonStartDate")]
@@ -75,9 +75,9 @@ pub struct ClubScheduleMonth {
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct ClubScheduleWeek {
     #[serde(rename = "previousStartDate")]
-    pub previous_start_date: NaiveDate,
+    pub previous_start_date: Option<NaiveDate>,
     #[serde(rename = "nextStartDate")]
-    pub next_start_date: NaiveDate,
+    pub next_start_date: Option<NaiveDate>,
     #[serde(rename = "calendarUrl")]
     pub calendar_url: String,
     #[serde(rename = "clubTimezone")]
