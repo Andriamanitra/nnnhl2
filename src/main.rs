@@ -30,6 +30,7 @@ fn games2html(games: Vec<api_types::Game>) -> Markup {
         };
         let special_outcome = match game.game_outcome {
             Some(api_types::GameOutcome { ref last_period_type }) if last_period_type != "REG" => Some(last_period_type),
+            _ if game.period_descriptor.period_type != "REG" => Some(&game.period_descriptor.period_type),
             _ => None,
         };
         let score = html! {

@@ -22,6 +22,7 @@ pub struct Game {
     /// * `"FUT"` - game has not started yet
     /// * `"PRE"` - pre-game
     /// * `"LIVE"` - game is ongoing
+    /// * `"CRIT"` - end of regulation
     /// * `"FINAL"` - game has ended
     /// * `"OFF"` - broadcast has ended
     pub game_state: String,

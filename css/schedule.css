@@ -42,7 +42,7 @@
     color: #444;
     border-radius: 3px;
 }
-.LIVE .score {
+.LIVE .score, .CRIT .score {
     color: #cc0606;
 }
 .FUT .score {
