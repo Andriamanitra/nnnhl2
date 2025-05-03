@@ -113,9 +113,9 @@ pub struct HomeTeam {
 
 #[derive(Default, Debug, Clone, PartialEq, Serialize, Deserialize)]
 pub struct PeriodDescriptor {
-    pub number: i64,
+    pub number: Option<i64>,
     #[serde(rename = "periodType")]
-    pub period_type: String,
+    pub period_type: Option<String>,
     #[serde(rename = "maxRegulationPeriods")]
     pub max_regulation_periods: i64,
 }
