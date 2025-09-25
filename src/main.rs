@@ -104,7 +104,8 @@ fn schedule_page(schedule: api_types::Schedule) -> Markup {
                 h1 { "NHL Schedule" }
 
                 @for day in schedule.game_week {
-                    h2 {
+                    @let is_preseason = schedule.pre_season_start_date <= day.date && day.date < schedule.regular_season_start_date;
+                    h2.preseason[is_preseason] {
                         (day.date.format("%a %d.%m."))
                     }
                     (games2html(day.games))

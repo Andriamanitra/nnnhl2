@@ -1,3 +1,12 @@
+.preseason::after {
+    color: #555;
+    content: '(Preseason)';
+    font-size: 0.6em;
+    height: 0.6em;
+    display: inline-block;
+    position: relative;
+    transform: translate(1ch, -50%);
+}
 .game {
     display: flex;
     padding: 0 1ch;
