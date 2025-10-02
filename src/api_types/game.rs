@@ -51,7 +51,7 @@ pub struct Game {
     #[serde(rename = "condensedGameFr")]
     pub condensed_game_fr: Option<String>,
     #[serde(rename = "gameCenterLink")]
-    pub game_center_link: String,
+    pub game_center_link: Option<String>,
     #[serde(rename = "ticketsLink")]
     pub tickets_link: Option<String>,
     #[serde(rename = "ticketsLinkFr")]

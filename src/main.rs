@@ -19,8 +19,12 @@ fn games2html(games: Vec<api_types::Game>) -> Markup {
         let away = html! {
             span.(game.away_team.abbrev) { (game.away_team.abbrev) }
         };
-        let game_center_link = html! {
-            a title="NHL GameCenter" href=(format!("https://nhl.com{}", game.game_center_link)) { "@" }
+        let at = html! {
+            @if let Some(game_center_path) = game.game_center_link {
+                a.at title="NHL GameCenter" href=(format!("https://nhl.com{}", game_center_path)) { "@" }
+            } @else {
+                span.at { "@" }
+            }
         };
         let recap_link = match game.condensed_game {
             Some(path) => html! {
@@ -49,7 +53,7 @@ fn games2html(games: Vec<api_types::Game>) -> Markup {
 
         html! {
             li.game.(game.game_state) {
-                (clock) (away) (game_center_link) (home) (recap_link) (score)
+                (clock) (away) (at) (home) (recap_link) (score)
             }
         }
     }
