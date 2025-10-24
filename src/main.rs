@@ -124,7 +124,7 @@ fn schedule_page(schedule: api_types::Schedule) -> Markup {
 fn standings_page(standings: api_types::Standings) -> Markup {
     fn last10(team: &api_types::TeamStanding) -> Markup {
         html! {
-            (team.l10regulation_plus_ot_wins)
+            (team.l10wins)
             "-"
             (team.l10losses)
             "-"
