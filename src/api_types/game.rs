@@ -141,6 +141,4 @@ pub struct SpecialEvent {
     #[serde(rename = "parentId")]
     pub parent_id: i64,
     pub name: LocalizableString,
-    #[serde(rename = "lightLogoUrl")]
-    pub light_logo_url: LocalizableString,
 }
