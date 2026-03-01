@@ -88,6 +88,32 @@ fn nav() -> Markup {
     }
 }
 
+fn conference_standings(conference_abbrev: &str, standings: &[api_types::TeamStanding]) -> Markup {
+    html! {
+        ol {
+            @for team in standings {
+                @if team.conference_abbrev == conference_abbrev {
+                    li."team-standing"
+                      ."no-playoff-spot"[team.wildcard_sequence > 2]
+                      ."playoff-spot"[team.wildcard_sequence == 0]
+                      ."wildcard-spot"[matches!(team.wildcard_sequence, 1 | 2)]
+                    {
+                        span { (team.league_sequence) "." }
+                        span.team.(team.team_abbrev) { (team.team_abbrev) }
+                        span.division { (team.division_name[0..3]) }
+                        span { (team.games_played) "G" }
+                        span { (format!("{:.3}", team.point_pctg)) }
+                        span { (team.points) "p" }
+                        span { (format!("{:+}", team.goal_differential)) }
+                        span { "(" (team.l10wins) "-" (team.l10losses) "-" (team.l10ot_losses) ")" }
+                        span { (team.streak_code) (team.streak_count) }
+                    }
+                }
+            }
+        }
+    }
+}
+
 fn schedule_page(schedule: api_types::Schedule) -> Markup {
     html! {
         (DOCTYPE)
@@ -121,16 +147,11 @@ fn schedule_page(schedule: api_types::Schedule) -> Markup {
     }
 }
 
-fn standings_page(standings: api_types::Standings) -> Markup {
-    fn last10(team: &api_types::TeamStanding) -> Markup {
-        html! {
-            (team.l10wins)
-            "-"
-            (team.l10losses)
-            "-"
-            (team.l10ot_losses)
-        }
-    }
+fn standings_page(mut standings: api_types::Standings) -> Markup {
+    standings.standings.sort_by(|a, b|
+        b.point_pctg.total_cmp(&a.point_pctg)
+        .then(a.league_sequence.cmp(&b.league_sequence))
+    );
 
     html! {
         (DOCTYPE)
@@ -149,19 +170,12 @@ fn standings_page(standings: api_types::Standings) -> Markup {
             body {
                 (nav())
                 h1 { "NHL Standings" }
-                ol {
-                    @for team in standings.standings {
-                        li."team-standing" {
-                            span.(team.team_abbrev) { (team.team_abbrev) }
-                            span { (team.games_played) "G" }
-                            span { (format!("{:.3}", team.point_pctg)) }
-                            span { (team.points) "p" }
-                            span { (format!("{:+}", team.goal_differential)) }
-                            span { "(" (last10(&team)) ")" }
-                            span { (team.streak_code) (team.streak_count) }
-                        }
-                    }
-                }
+
+                h2 { "Eastern Conference" }
+                (conference_standings("E", &standings.standings))
+
+                h2 { "Western Conference" }
+                (conference_standings("W", &standings.standings))
             }
         }
     }
